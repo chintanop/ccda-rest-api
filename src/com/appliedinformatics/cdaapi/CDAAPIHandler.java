@@ -6,6 +6,7 @@ import org.restlet.Application;
 import org.restlet.Component;
 import org.restlet.Restlet;
 import org.restlet.data.Protocol;
+import org.restlet.routing.Filter;
 import org.restlet.routing.Router;
 
 /**
@@ -31,6 +32,7 @@ public class CDAAPIHandler extends Application{
         Router router = new Router(getContext());
         // Defines only one route
        // router.attachDefault(CDAResource.class);
+        
         router.attach("/bbplus", CDAResource.class);
         router.attach("/bbplus/{patient_id}/{section}", CDAResource.class);
         return router;
@@ -68,7 +70,7 @@ public class CDAAPIHandler extends Application{
         	
         	if (args.length == 1){
         		try{
-        			port = Integer.parseInt(args[1]);
+        			port = Integer.parseInt(args[0]);
         		}catch(NumberFormatException nfe){
         			System.out.println("Please enter a numeric argument for the port");
         			System.exit(0);

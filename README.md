@@ -3,7 +3,7 @@ CCDA REST API
 
 A CCDA REST API was developed to make it quick and super easy for developers to parse and retrieve information from CCDA documents.
 
-Here is the demo site.
+Here is the [demo site](http://ccdapi.appliedinformaticsinc.com/client_demo)
 
 API Operations
 --------------

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.restlet.data.Form;
 import org.restlet.data.Reference;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
@@ -19,28 +20,33 @@ public class TestClient {
 
 	public static void main(String[] args) throws IOException {
 		ClientResource requestResource = new ClientResource("http://localhost:8182/bbplus");
-		String str  = readFileAsString("ccd_samples/PatientPortal8302.xml");
+		String str  = readFileAsString("ccd_samples/test_ccda1.xml");
 	
 		//Add CDA XML by making a POST request on CDAResource
 	    Representation rep = new StringRepresentation(str);
-	    Representation reply = requestResource.post(rep);
+	    
+	    Form form = new Form();
+	    form.add("bbfile",str);
+	    form.add("op_format", "json");
+	    
+	    Representation reply = requestResource.post(form);
 	    
 	    System.out.println(reply.getText());
 	    
 	    //Get a section, make a GET Request on CDAResource
-	    requestResource = new ClientResource("http://localhost:8182/bbplus/996-756-495/problems");
+	    requestResource = new ClientResource("http://localhost:8182/bbplus/9473/demographics");
 	    Reference ref = requestResource.getReference();
-	    ref.addQueryParameter("patient", "996-756-495");
-	    //ref.addQueryParameter("section", "problems");
+	   // ref.addQueryParameter("patient", "996-756-495");
+	   // ref.addQueryParameter("section", "problems");
 	    //ref.addQueryParameter("section", "allergies");
 	    //ref.addQueryParameter("section", "results");
-	    ref.addQueryParameter("section", "demographics");
+	    //ref.addQueryParameter("section", "demographics");
 
 	    requestResource.setReference(ref);
 	    Representation res = requestResource.get();
 	    
 	    //Print the output on the console
-	    System.out.println(res.getText());
+	    System.out.println(res.toString());
 	}
 	
 	private static String readFileAsString(String filePath) throws IOException {

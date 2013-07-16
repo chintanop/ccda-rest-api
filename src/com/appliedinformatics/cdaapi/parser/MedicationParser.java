@@ -38,7 +38,7 @@ public class MedicationParser {
 	public ArrayList parse(){
 		ArrayList medList = new ArrayList<HashMap>();
 		
-		if(medSection == null){
+		if(this.medSection == null){
 			return medList;
 		}
 		

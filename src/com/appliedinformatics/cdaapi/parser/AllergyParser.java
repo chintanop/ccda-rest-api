@@ -31,6 +31,10 @@ public class AllergyParser {
 		
 		ArrayList allergyList = new ArrayList<HashMap>();
 
+		if(this.allergySection == null){
+			return allergyList;
+		}
+		
 		for(Act act:allergySection.getActs()){
 
 			for(EntryRelationship entryR : act.getEntryRelationships()){

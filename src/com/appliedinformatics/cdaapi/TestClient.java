@@ -20,7 +20,7 @@ public class TestClient {
 
 	public static void main(String[] args) throws IOException {
 		ClientResource requestResource = new ClientResource("http://localhost:8182/bbplus");
-		String str  = readFileAsString("ccd_samples/test_ccda1.xml");
+		String str  = readFileAsString("ccd_samples/CCDATest5.xml");
 	
 		//Add CDA XML by making a POST request on CDAResource
 	    Representation rep = new StringRepresentation(str);
@@ -31,21 +31,24 @@ public class TestClient {
 	    
 	    Representation reply = requestResource.post(form);
 	    
+	    System.out.println("JSON format:");
 	    System.out.println(reply.getText());
 	    
 	    //Get a section, make a GET Request on CDAResource
-	    requestResource = new ClientResource("http://localhost:8182/bbplus/9473/demographics");
+	    requestResource = new ClientResource("http://localhost:8182/bbplus/12375680/demographics");
 	    Reference ref = requestResource.getReference();
-	   // ref.addQueryParameter("patient", "996-756-495");
+	    ref.addQueryParameter("patient", "996-756-495");
 	   // ref.addQueryParameter("section", "problems");
 	    //ref.addQueryParameter("section", "allergies");
 	    //ref.addQueryParameter("section", "results");
-	    //ref.addQueryParameter("section", "demographics");
+	    ref.addQueryParameter("section", "demographics");
 
 	    requestResource.setReference(ref);
 	    Representation res = requestResource.get();
 	    
 	    //Print the output on the console
+	    System.out.println("DEMOGRAPHICS:");
+	    System.out.println(res.getText());
 	    System.out.println(res.toString());
 	}
 	

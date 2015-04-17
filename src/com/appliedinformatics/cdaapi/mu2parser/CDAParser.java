@@ -1,5 +1,6 @@
-package com.appliedinformatics.cdaapi.parser;
+package com.appliedinformatics.cdaapi.mu2parser;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -24,13 +25,13 @@ import org.openhealthtools.mdht.uml.cda.ccd.CCDFactory;
 import org.openhealthtools.mdht.uml.cda.hitsp.DiagnosticResultsSection;
 import org.openhealthtools.mdht.uml.cda.ccd.ContinuityOfCareDocument;
 import org.openhealthtools.mdht.uml.cda.ccd.EpisodeObservation;
-import org.openhealthtools.mdht.uml.cda.ccd.MedicationsSection;
-import org.openhealthtools.mdht.uml.cda.ccd.ProblemAct;
-import org.openhealthtools.mdht.uml.cda.ccd.ProblemObservation;
-import org.openhealthtools.mdht.uml.cda.ccd.ProblemSection;
-import org.openhealthtools.mdht.uml.cda.ccd.ResultObservation;
-import org.openhealthtools.mdht.uml.cda.ccd.ResultOrganizer;
-import org.openhealthtools.mdht.uml.cda.ccd.ResultsSection;
+import org.openhealthtools.mdht.uml.cda.consol.MedicationsSection;
+import org.openhealthtools.mdht.uml.cda.consol.MedicationActivity;
+import org.openhealthtools.mdht.uml.cda.consol.ProblemObservation;
+import org.openhealthtools.mdht.uml.cda.consol.ProblemSection;
+import org.openhealthtools.mdht.uml.cda.consol.ResultObservation;
+import org.openhealthtools.mdht.uml.cda.consol.ResultOrganizer;
+import org.openhealthtools.mdht.uml.cda.consol.ResultsSection;
 import org.openhealthtools.mdht.uml.cda.hitsp.HITSPPackage;
 import org.openhealthtools.mdht.uml.cda.hitsp.PatientSummary;
 import org.openhealthtools.mdht.uml.cda.util.CDAUtil;
@@ -52,7 +53,6 @@ import org.openhealthtools.mdht.uml.hl7.vocab.x_ActRelationshipEntryRelationship
 import org.openhealthtools.mdht.uml.cda.mu2consol.Mu2consolPackage;
 import org.openhealthtools.mdht.uml.cda.mu2consol.Mu2consolFactory;
 import org.openhealthtools.mdht.uml.cda.mu2consol.ClinicalOfficeVisitSummary;
-
 /**
  * 
  * @author Chintan Patel <chintan@trialx.com>
@@ -72,6 +72,7 @@ public class CDAParser {
 	
 	PatientSummary ps 						= null; //for HITSP 83
 	ContinuityOfCareDocument ccd 			= null; //for HITSP 32
+	public ClinicalOfficeVisitSummary covs			= null; //for Mu2 C-CDA
 	
 	/**
 	 * Constructor for the CDA Parser. Accepts an InputStream of a CDA document in either
@@ -109,30 +110,15 @@ public class CDAParser {
 			System.out.println("WARNING: " + diagnostic.getMessage());
 		}
 		
-		String allergy_template_id = "2.16.840.1.113883.10.20.1.2";
+		 covs = (ClinicalOfficeVisitSummary)cd;
+		System.out.println("NOT A CCDA or PATIENT SUMMARY!");
+		System.out.println(cd);
+		System.out.println(covs);
 		
-		if (cd instanceof ContinuityOfCareDocument){
-			ContinuityOfCareDocument ccd = (ContinuityOfCareDocument) cd;
-			System.out.println("CCD");
-			medicationsSection 			= ccd.getMedicationsSection();
-			problemSection				= ccd.getProblemSection();
-			allergySection 				= CDAParserUtil.getSection(cd, allergy_template_id);	
-			resultsSection 				= ccd.getResultsSection();
-		}else if (cd instanceof PatientSummary){
-			PatientSummary ps 	= (PatientSummary)cd;
-			medicationsSection 	= ps.getMedicationsSection();
-			problemSection 		= ps.getProblemSection();
-			System.out.println("Patient Summary");
-			allergySection 			= ps.getAllergiesReactionsSection();
-			diagnosticResultsSection = ps.getDiagnosticResultsSection();
-		}else{
-			ClinicalOfficeVisitSummary covs = (ClinicalOfficeVisitSummary)cd;
-			System.out.println("NOT A CCDA or PATIENT SUMMARY!");
-			System.out.println(cd);
-			System.out.println(covs);
-			medicationsSection = (MedicationsSection) covs.getMedicationsSection();
-			
-		}
+		medicationsSection 	= covs.getMedicationsSection();
+		problemSection = covs.getProblemSection();
+		allergySection = covs.getAllergiesSection();
+		resultsSection = covs.getResultsSection();
 	}
 	
 	
@@ -180,5 +166,31 @@ public class CDAParser {
 	 */
 	public HashMap getDemographics(){
 		return (new DemographicParser(cd)).parse();
+	}
+	
+	public static void main(String[] args) {
+		InputStream is;
+		try {
+			is = new FileInputStream(new File("ccd_samples/CCDATest13.xml"));
+			CDAParser cdaParser = new CDAParser(is);
+			System.out.println("\n\n******* MEDICATIONS ************\n\n");
+			System.out.println(cdaParser.getMedications());
+			
+			System.out.println(("\n\n****** RESULTS ***************\n\n"));
+			System.out.println(cdaParser.getResults());
+			
+			System.out.println(("\n\n****** ALLERGIES ***************\n\n"));
+			System.out.println(cdaParser.getAllergies());
+			
+			System.out.println(("\n\n****** PROBLEMS ***************\n\n"));
+			System.out.println(cdaParser.getProblems());
+			
+			System.out.println(("\n\n****** DEMOGRAPHICS ***************\n\n"));
+			System.out.println(cdaParser.getDemographics());
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -39,7 +39,7 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.ServerResource;
 import org.restlet.util.Series;
 
-import com.appliedinformatics.cdaapi.parser.CDAParser;
+import com.appliedinformatics.cdaapi.mu2parser.CDAParser;
 import com.google.gson.Gson;
 
 /**

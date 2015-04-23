@@ -128,66 +128,7 @@ public class CDAParser {
 		for(Section sec: covs.getAllSections()){
 			String r = sec.getClass().getName();
 			if (r == "org.openhealthtools.mdht.uml.cda.consol.impl.VitalSignsSectionEntriesOptionalImpl"){
-				VitalSection = sec ;
-				System.out.println(sec.getClinicalDocument());
-				System.out.println("aaaaammmmmmiiiiiiiirrrr");
-//				System.out.println(sec.getTitle());
-//				System.out.println(sec.getText());
-//				System.out.println(sec.getOutboundRelationships());
-//				System.out.println(sec.getInformants());
-//				System.out.println(sec.eContents());
-//				System.out.println(sec.getCode());
-//				System.out.println(sec.getSections());
-//				System.out.println(sec.getEntries());
-//				System.out.println(sec.getRealmCodes());
-//				System.out.println(sec.getObservationMedia());
-//				System.out.println(sec.getObservations());
-//				System.out.println(sec.getSections());
-//				System.out.println(sec.getSubstanceAdministrations());
-//				System.out.println(sec.getSubject());
-//				ArrayList vitalList = new ArrayList<HashMap>();
-//				for( Entry e:sec.getEntries()){
-//					Organizer k = e.getOrganizer();
-//					HashMap vmap = new HashMap<String, String>();
-//					for (Component4 x : k.getComponents()){
-//						
-//						Observation obs = x.getObservation();
-//						
-//						CD co = obs.getCode();
-//						String vital_name = co.getDisplayName();
-//						if (obs.getValues().size() > 0){
-//							obs.unsetNullFlavor();
-//							System.out.println(obs.getValues().get(0));
-//							PQ kl = (PQ) obs.getValues().get(0);
-//							System.out.println("problem_status");
-//							System.out.println(kl.getValue());
-//							System.out.println(kl.getUnit());
-//						}
-						
-						
-						
-						
-						
-						
-						
-						
-						
-//						String val = CDAParserUtil.getTranslationDisplayName(obs.getValues().get(0));
-//						System.out.println(obs.getValues().toArray().toString());
-//						vmap.put(vital_name, value);
-						
-
-//					}
-//					vitalList.add(vmap);
-//					
-//					
-//				}
-//					System.out.println(vitalList);
-				
-
-				
-				
-			
+				VitalSection = sec ;		
 			}
 		}
 		medicationsSection 	= covs.getMedicationsSection();

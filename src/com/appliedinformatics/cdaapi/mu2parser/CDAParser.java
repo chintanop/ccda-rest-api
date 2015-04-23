@@ -4,13 +4,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.openhealthtools.mdht.uml.cda.Act;
 import org.openhealthtools.mdht.uml.cda.ClinicalDocument;
+import org.openhealthtools.mdht.uml.cda.Component4;
+import org.openhealthtools.mdht.uml.cda.Component5;
 import org.openhealthtools.mdht.uml.cda.Consumable;
+import org.openhealthtools.mdht.uml.cda.Entry;
 import org.openhealthtools.mdht.uml.cda.EntryRelationship;
 import org.openhealthtools.mdht.uml.cda.ManufacturedProduct;
 import org.openhealthtools.mdht.uml.cda.Material;
@@ -32,6 +39,7 @@ import org.openhealthtools.mdht.uml.cda.consol.ProblemSection;
 import org.openhealthtools.mdht.uml.cda.consol.ResultObservation;
 import org.openhealthtools.mdht.uml.cda.consol.ResultOrganizer;
 import org.openhealthtools.mdht.uml.cda.consol.ResultsSection;
+import org.openhealthtools.mdht.uml.cda.consol.VitalSignsSectionEntriesOptional;
 import org.openhealthtools.mdht.uml.cda.hitsp.HITSPPackage;
 import org.openhealthtools.mdht.uml.cda.hitsp.PatientSummary;
 import org.openhealthtools.mdht.uml.cda.util.CDAUtil;
@@ -40,6 +48,7 @@ import org.openhealthtools.mdht.uml.hl7.datatypes.AD;
 import org.openhealthtools.mdht.uml.hl7.datatypes.ANY;
 import org.openhealthtools.mdht.uml.hl7.datatypes.CD;
 import org.openhealthtools.mdht.uml.hl7.datatypes.CE;
+import org.openhealthtools.mdht.uml.hl7.datatypes.ED;
 import org.openhealthtools.mdht.uml.hl7.datatypes.ENXP;
 import org.openhealthtools.mdht.uml.hl7.datatypes.IVL_PQ;
 import org.openhealthtools.mdht.uml.hl7.datatypes.IVL_TS;
@@ -48,11 +57,12 @@ import org.openhealthtools.mdht.uml.hl7.datatypes.PN;
 import org.openhealthtools.mdht.uml.hl7.datatypes.PQ;
 import org.openhealthtools.mdht.uml.hl7.datatypes.SXCM_TS;
 import org.openhealthtools.mdht.uml.hl7.datatypes.impl.ENImpl;
+import org.openhealthtools.mdht.uml.hl7.vocab.NullFlavor;
 import org.openhealthtools.mdht.uml.hl7.vocab.x_ActRelationshipEntryRelationship;
-
 import org.openhealthtools.mdht.uml.cda.mu2consol.Mu2consolPackage;
 import org.openhealthtools.mdht.uml.cda.mu2consol.Mu2consolFactory;
 import org.openhealthtools.mdht.uml.cda.mu2consol.ClinicalOfficeVisitSummary;
+import org.openhealthtools.mdht.uml.hl7.datatypes.PQ;
 /**
  * 
  * @author Chintan Patel <chintan@trialx.com>
@@ -69,9 +79,9 @@ public class CDAParser {
 	Section allergySection 					= null;
 	ResultsSection resultsSection 			= null;
 	DiagnosticResultsSection diagnosticResultsSection = null;
-	
 	PatientSummary ps 						= null; //for HITSP 83
 	ContinuityOfCareDocument ccd 			= null; //for HITSP 32
+	Section VitalSection = null;
 	public ClinicalOfficeVisitSummary covs			= null; //for Mu2 C-CDA
 	
 	/**
@@ -100,7 +110,8 @@ public class CDAParser {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("Aamir");
+		System.out.println("Aamir");
 		//Output diagnostic error messages
 		//TODO: return any errors to the client
 		for (Diagnostic diagnostic : result.getErrorDiagnostics()) {
@@ -114,7 +125,71 @@ public class CDAParser {
 		System.out.println("NOT A CCDA or PATIENT SUMMARY!");
 		System.out.println(cd);
 		System.out.println(covs);
-		
+		for(Section sec: covs.getAllSections()){
+			String r = sec.getClass().getName();
+			if (r == "org.openhealthtools.mdht.uml.cda.consol.impl.VitalSignsSectionEntriesOptionalImpl"){
+				VitalSection = sec ;
+				System.out.println(sec.getClinicalDocument());
+				System.out.println("aaaaammmmmmiiiiiiiirrrr");
+//				System.out.println(sec.getTitle());
+//				System.out.println(sec.getText());
+//				System.out.println(sec.getOutboundRelationships());
+//				System.out.println(sec.getInformants());
+//				System.out.println(sec.eContents());
+//				System.out.println(sec.getCode());
+//				System.out.println(sec.getSections());
+//				System.out.println(sec.getEntries());
+//				System.out.println(sec.getRealmCodes());
+//				System.out.println(sec.getObservationMedia());
+//				System.out.println(sec.getObservations());
+//				System.out.println(sec.getSections());
+//				System.out.println(sec.getSubstanceAdministrations());
+//				System.out.println(sec.getSubject());
+//				ArrayList vitalList = new ArrayList<HashMap>();
+//				for( Entry e:sec.getEntries()){
+//					Organizer k = e.getOrganizer();
+//					HashMap vmap = new HashMap<String, String>();
+//					for (Component4 x : k.getComponents()){
+//						
+//						Observation obs = x.getObservation();
+//						
+//						CD co = obs.getCode();
+//						String vital_name = co.getDisplayName();
+//						if (obs.getValues().size() > 0){
+//							obs.unsetNullFlavor();
+//							System.out.println(obs.getValues().get(0));
+//							PQ kl = (PQ) obs.getValues().get(0);
+//							System.out.println("problem_status");
+//							System.out.println(kl.getValue());
+//							System.out.println(kl.getUnit());
+//						}
+						
+						
+						
+						
+						
+						
+						
+						
+						
+//						String val = CDAParserUtil.getTranslationDisplayName(obs.getValues().get(0));
+//						System.out.println(obs.getValues().toArray().toString());
+//						vmap.put(vital_name, value);
+						
+
+//					}
+//					vitalList.add(vmap);
+//					
+//					
+//				}
+//					System.out.println(vitalList);
+				
+
+				
+				
+			
+			}
+		}
 		medicationsSection 	= covs.getMedicationsSection();
 		problemSection = covs.getProblemSection();
 		allergySection = covs.getAllergiesSection();
@@ -160,6 +235,9 @@ public class CDAParser {
 		return (new ProblemParser(problemSection)).parse();
 	}
 
+	public ArrayList getVitals(){
+		return (new VitalSignParser(VitalSection)).parse();
+	}
 	/**
 	 * Get demographics from the CDA
 	 * @return HashMap/Dictionary of Demographics
@@ -171,7 +249,7 @@ public class CDAParser {
 	public static void main(String[] args) {
 		InputStream is;
 		try {
-			is = new FileInputStream(new File("ccd_samples/CCDATest13.xml"));
+			is = new FileInputStream(new File("ccd_samples/CCDATest5.xml"));
 			CDAParser cdaParser = new CDAParser(is);
 			System.out.println("\n\n******* MEDICATIONS ************\n\n");
 			System.out.println(cdaParser.getMedications());
@@ -187,7 +265,9 @@ public class CDAParser {
 			
 			System.out.println(("\n\n****** DEMOGRAPHICS ***************\n\n"));
 			System.out.println(cdaParser.getDemographics());
-			
+
+			System.out.println(("\n\n****** Vitals ***************\n\n"));
+			System.out.println(cdaParser.getVitals());			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

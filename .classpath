@@ -16,13 +16,13 @@
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.ccd.source_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.cdt_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.cdt.source_1.2.0.201302191803.jar"/>
-	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.consol_1.2.0.201302191803.jar"/>
+	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.consol_1.2.0.201302191803.jar" sourcepath="ext_lib/org.openhealthtools.mdht.uml.cda.consol.source_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.consol.source_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.hitsp_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.hitsp.source_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.ihe_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.ihe.source_1.2.0.201302191803.jar"/>
-	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.mu2consol_1.2.0.201302191803.jar"/>
+	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.mu2consol_1.2.0.201302191803.jar" sourcepath="ext_lib/org.openhealthtools.mdht.uml.cda.mu2consol_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.mu2consol.source_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.cda.source_1.2.0.201302191803.jar"/>
 	<classpathentry kind="lib" path="ext_lib/org.openhealthtools.mdht.uml.hl7.datatypes_1.2.0.201302191803.jar"/>

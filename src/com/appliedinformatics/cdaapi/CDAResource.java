@@ -138,6 +138,7 @@ public class CDAResource extends ServerResource{
 		record.put("results", cdaParser.getResults());
 		record.put("allergies", cdaParser.getAllergies());
 		record.put("problems", cdaParser.getProblems());
+		record.put("vitalsigns", cdaParser.getVitals());
 		
 		//Store the parsed sections into global application storage
 		CDAAPIHandler app = (CDAAPIHandler)getApplication();

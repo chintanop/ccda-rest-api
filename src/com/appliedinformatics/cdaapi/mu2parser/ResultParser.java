@@ -8,6 +8,7 @@ import org.openhealthtools.mdht.uml.cda.ReferenceRange;
 import org.openhealthtools.mdht.uml.cda.consol.ResultObservation;
 import org.openhealthtools.mdht.uml.cda.consol.ResultOrganizer;
 import org.openhealthtools.mdht.uml.cda.consol.ResultsSection;
+import org.openhealthtools.mdht.uml.cda.consol.VitalSignsSection;
 import org.openhealthtools.mdht.uml.cda.hitsp.DiagnosticResultsSection;
 import org.openhealthtools.mdht.uml.hl7.datatypes.ANY;
 import org.openhealthtools.mdht.uml.hl7.datatypes.CE;
@@ -27,6 +28,7 @@ public class ResultParser {
 	
 	ResultsSection resultsSection;
 	DiagnosticResultsSection diagnosticResultsSection;
+	VitalSignsSection vitalsignSection;
 	
 	public ResultParser(ResultsSection resultsSection){
 		this.resultsSection = resultsSection;
@@ -34,6 +36,9 @@ public class ResultParser {
 	
 	public ResultParser(DiagnosticResultsSection diagnosticResultsSection){
 		this.diagnosticResultsSection = diagnosticResultsSection;
+	}
+	public ResultParser(VitalSignsSection vitalsignSection){
+		this.vitalsignSection = vitalsignSection;
 	}
 	
 	public ArrayList parse(){

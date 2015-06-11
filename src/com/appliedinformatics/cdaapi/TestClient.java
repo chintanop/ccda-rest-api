@@ -20,7 +20,7 @@ public class TestClient {
 
 	public static void main(String[] args) throws IOException {
 		ClientResource requestResource = new ClientResource("http://localhost:8182/bbplus");
-	    String str  = readFileAsString("ccd_samples/CCDATest3.xml");
+	    String str  = readFileAsString("ccd_samples/CCDATest5.xml");
 		//Add CDA XML by making a POST request on CDAResource
 	    Representation rep = new StringRepresentation(str);
 	    

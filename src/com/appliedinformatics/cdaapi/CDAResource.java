@@ -55,7 +55,7 @@ public class CDAResource extends ServerResource{
 	 * Handle the GET requests on the root
 	 * 
 	 * @param patient_id: obtained from the POST request 
-	 * @param section: The patient record section ["demographics","medications", "results", "allergies", "problems"]
+	 * @param section: The patient record section ["demographics","medications", "results", "allergies", "problems","vitalsigns","procedures"]
 	 * 
 	 * @return JSON object of the requested section
 	 */
@@ -139,6 +139,7 @@ public class CDAResource extends ServerResource{
 		record.put("allergies", cdaParser.getAllergies());
 		record.put("problems", cdaParser.getProblems());
 		record.put("vitalsigns", cdaParser.getVitals());
+		record.put("procedures", cdaParser.getProcedures());
 		
 		//Store the parsed sections into global application storage
 		CDAAPIHandler app = (CDAAPIHandler)getApplication();

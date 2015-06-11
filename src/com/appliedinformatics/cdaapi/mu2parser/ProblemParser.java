@@ -56,6 +56,7 @@ public class ProblemParser {
 						
 						IVL_TS pTime = pobs.getEffectiveTime();
 						HashMap ts = CDAParserUtil.getTS(pTime);
+						cond.put("code", pobs.getCode().getCode());
 						cond.put("name", problem_name);
 						cond.put("status", problem_status);
 						cond.put("ts", ts);

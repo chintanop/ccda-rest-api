@@ -30,7 +30,7 @@ public class VitalSignParser {
 					Observation obs = x.getObservation();				
 					CD co = obs.getCode();
 					String vital_name = co.getDisplayName();
-					if (obs.getValues().size() > 0){
+					if (vital_name!=null && obs.getValues().size() > 0){
 						PQ kl = (PQ) obs.getValues().get(0);
 						String value = kl.getValue() + " " +kl.getUnit();
 						vmap.put(vital_name, value);
@@ -38,7 +38,9 @@ public class VitalSignParser {
 					}
 
 				}
-				vitalList.add(vmap);
+				if (vmap.size()>0){
+					vitalList.add(vmap);
+				}
 		}
 		return vitalList;
 		

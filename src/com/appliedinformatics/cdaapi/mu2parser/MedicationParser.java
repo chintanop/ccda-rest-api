@@ -1,6 +1,7 @@
 package com.appliedinformatics.cdaapi.mu2parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.openhealthtools.mdht.uml.cda.Consumable;
@@ -45,7 +46,6 @@ public class MedicationParser {
 		
 		int indx = 0;
 		
-
 		for (SubstanceAdministration sa : medSection.getSubstanceAdministrations()){
 			
 //		for (SubstanceAdministration sa : medSection.getSubstanceAdministrations()) {
@@ -63,8 +63,6 @@ public class MedicationParser {
 				med_name = mf.getCode().getDisplayName();
 			}
 			
-			System.out.println("MED NAME"+med_name);
-			
 			//Dose + repeat number
 			IVL_PQ dose 	= sa.getDoseQuantity();
 			
@@ -79,7 +77,7 @@ public class MedicationParser {
 			HashMap ts = null;
 			
 			for(SXCM_TS effectiveTime :sa.getEffectiveTimes()){
-				System.out.println(effectiveTime);
+				//System.out.println(effectiveTime);
 				if (effectiveTime instanceof PIVL_TS){
 					PIVL_TS periodTS = (PIVL_TS)effectiveTime;
 					period_unit += ""+periodTS.getPeriod().getValue()+" "+periodTS.getPeriod().getUnit();
@@ -151,6 +149,8 @@ public class MedicationParser {
 			//indx = indx+1;
 			
 		}	
+		
+		Collections.sort(medList, new DateComparator());
 		return medList;
 	}
 	

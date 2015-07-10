@@ -1,6 +1,7 @@
 package com.appliedinformatics.cdaapi.mu2parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.openhealthtools.mdht.uml.cda.Observation;
@@ -32,6 +33,8 @@ public class ProblemParser {
 		if(problemSection == null){
 			return condList;
 		}
+		
+		try{
 		for(ProblemConcernAct problemAct: problemSection.getProblemConcerns()){
 		
 				for(Observation obs : problemAct.getObservations()){
@@ -70,7 +73,11 @@ public class ProblemParser {
 				}
 		
 		}
-		
+		}catch(Exception ex){
+			System.out.println("Problem Parsing Exception:");
+			ex.printStackTrace();
+		}
+		Collections.sort(condList,new DateComparator());
 		return condList;
 		
 	}

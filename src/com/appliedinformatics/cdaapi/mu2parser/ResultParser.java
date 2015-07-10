@@ -58,6 +58,8 @@ public class ResultParser {
 			return resultsList;
 		}
 		
+		try{
+		
 		for(ResultOrganizer rorg: resultsSection.getResultOrganizers()){
 
 			HashMap res_org = new HashMap();
@@ -122,6 +124,10 @@ public class ResultParser {
 			res_org.put("results", res_items);
 			
 			resultsList.add(res_org);
+		}
+		}catch(Exception ex){
+			System.out.println("Result Parsing Exception:");
+			ex.printStackTrace();
 		}
 		
 		return resultsList;

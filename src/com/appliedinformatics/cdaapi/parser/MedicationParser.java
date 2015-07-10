@@ -59,6 +59,10 @@ public class MedicationParser {
 				med_name = mf.getCode().getDisplayName();
 			}
 			
+			if (med_name == null){
+				 med_name = CDAParserUtil.getTranslationDisplayName(sa.getCode());
+			}
+			
 			//Dose + repeat number
 			IVL_PQ dose 	= sa.getDoseQuantity();
 			String dosage =  ""+dose.getValue();

@@ -201,7 +201,7 @@ public class CDAParser {
 	public static void main(String[] args) {
 		InputStream is;
 		try {
-			is = new FileInputStream(new File("ccd_samples/CCDATest16.xml"));
+			is = new FileInputStream(new File("ccd_samples/1ccda.xml"));
 			CDAParser cdaParser = new CDAParser(is);
 			System.out.println("\n\n******* MEDICATIONS ************\n\n");
 			System.out.println(cdaParser.getMedications());

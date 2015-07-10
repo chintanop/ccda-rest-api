@@ -27,11 +27,10 @@ public class DemographicParser {
 	}
 	
 	public HashMap parse(){
-		
-		
-		RecordTarget recordTarget = cd.getRecordTargets().get(0);
-		
 		HashMap ptInfo = new HashMap();
+
+		try{
+		RecordTarget recordTarget = cd.getRecordTargets().get(0);
 		
 		org.openhealthtools.mdht.uml.cda.Patient patient = recordTarget.getPatientRole().getPatient();
 		
@@ -114,7 +113,10 @@ public class DemographicParser {
 		ptInfo.put("city", city.trim() );
 		ptInfo.put("state", state.trim());
 		ptInfo.put("country", country.trim() );
-
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 		return ptInfo;
 	}
 }

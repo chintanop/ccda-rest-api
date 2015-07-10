@@ -23,6 +23,8 @@ public class VitalSignParser {
 	
 	public ArrayList parse(){
 			ArrayList vitalList = new ArrayList<HashMap>();
+			
+			try{
 			for( Entry e:vitalSection.getEntries()){
 				Organizer k = e.getOrganizer();
 				HashMap vmap = new HashMap<String, String>();
@@ -41,7 +43,11 @@ public class VitalSignParser {
 				if (vmap.size()>0){
 					vitalList.add(vmap);
 				}
-		}
+			 }
+			}catch(Exception ex){
+				System.out.println("Vitals Parsing Error");
+				ex.printStackTrace();
+			}
 		return vitalList;
 		
 	}

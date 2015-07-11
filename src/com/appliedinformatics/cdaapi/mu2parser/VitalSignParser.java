@@ -11,6 +11,7 @@ import org.openhealthtools.mdht.uml.cda.Organizer;
 import org.openhealthtools.mdht.uml.cda.Section;
 import org.openhealthtools.mdht.uml.cda.consol.ResultOrganizer;
 import org.openhealthtools.mdht.uml.hl7.datatypes.CD;
+import org.openhealthtools.mdht.uml.hl7.datatypes.IVL_TS;
 import org.openhealthtools.mdht.uml.hl7.datatypes.PQ;
 
 public class VitalSignParser {
@@ -32,6 +33,12 @@ public class VitalSignParser {
 					Observation obs = x.getObservation();				
 					CD co = obs.getCode();
 					String vital_name = co.getDisplayName();
+					IVL_TS pTime = obs.getEffectiveTime();
+					System.out.println("9898989898989898");
+					HashMap ts = CDAParserUtil.getTS(pTime);
+					vmap.put("ts", ts);
+					
+					System.out.println(pTime);
 					if (vital_name!=null && obs.getValues().size() > 0){
 						PQ kl = (PQ) obs.getValues().get(0);
 						String value = kl.getValue() + " " +kl.getUnit();
@@ -48,6 +55,8 @@ public class VitalSignParser {
 				System.out.println("Vitals Parsing Error");
 				ex.printStackTrace();
 			}
+			System.out.println(vitalList);
+		vitalList.sort(vitalList,new DateComparator());
 		return vitalList;
 		
 	}

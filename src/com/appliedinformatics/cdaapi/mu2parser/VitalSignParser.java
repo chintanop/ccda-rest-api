@@ -1,6 +1,7 @@
 package com.appliedinformatics.cdaapi.mu2parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.openhealthtools.mdht.uml.cda.ClinicalDocument;
@@ -34,14 +35,14 @@ public class VitalSignParser {
 					CD co = obs.getCode();
 					String vital_name = co.getDisplayName();
 					IVL_TS pTime = obs.getEffectiveTime();
-					System.out.println("9898989898989898");
+					String tr = pTime.getValue();
 					HashMap ts = CDAParserUtil.getTS(pTime);
-					vmap.put("ts", ts);
-					
+					vmap.put("date", tr);
+//					System.out.println(ts);
 					System.out.println(pTime);
 					if (vital_name!=null && obs.getValues().size() > 0){
 						PQ kl = (PQ) obs.getValues().get(0);
-						String value = kl.getValue() + " " +kl.getUnit();
+						String value = kl.getValue() + ";" +kl.getUnit();
 						vmap.put(vital_name, value);
 
 					}
@@ -56,7 +57,7 @@ public class VitalSignParser {
 				ex.printStackTrace();
 			}
 			System.out.println(vitalList);
-		vitalList.sort(vitalList,new DateComparator());
+//			Collections.sort(vitalList,new DateComparator());
 		return vitalList;
 		
 	}

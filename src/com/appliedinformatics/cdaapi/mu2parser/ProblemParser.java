@@ -60,15 +60,15 @@ public class ProblemParser {
 						
 						IVL_TS pTime = pobs.getEffectiveTime();
 							//System.out.println(pobs.getCode());
-						String code1 = ((CD)pobs.getValues().get(0)).getCode();
+						String code = ((CD)pobs.getValues().get(0)).getCode();
 						//System.out.println((CD)pobs.getProblemStatus().getCode());
 						//System.out.println(((CD)pobs.getProblemStatus().getValues().get(0)));
 						HashMap ts = CDAParserUtil.getTS(pTime);
-						cond.put("code1", pobs.getCode().getCode());
+						//cond.put("code1", pobs.getCode().getCode());
 						cond.put("name", problem_name);
 						cond.put("status", problem_status);
 						cond.put("ts", ts);
-						cond.put("code", code1);
+						cond.put("code", code);
 						condList.add(cond);
 					}
 					if(obs instanceof EpisodeObservation){

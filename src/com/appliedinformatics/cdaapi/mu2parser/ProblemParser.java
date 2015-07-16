@@ -9,6 +9,7 @@ import org.openhealthtools.mdht.uml.cda.consol.EpisodeObservation;
 import org.openhealthtools.mdht.uml.cda.consol.ProblemConcernAct;
 import org.openhealthtools.mdht.uml.cda.consol.ProblemObservation;
 import org.openhealthtools.mdht.uml.cda.consol.ProblemSection;
+import org.openhealthtools.mdht.uml.cda.consol.ProblemStatus;
 import org.openhealthtools.mdht.uml.hl7.datatypes.CD;
 import org.openhealthtools.mdht.uml.hl7.datatypes.IVL_TS;
 
@@ -58,12 +59,16 @@ public class ProblemParser {
 						//System.out.println("PS:"+);
 						
 						IVL_TS pTime = pobs.getEffectiveTime();
-						System.out.println(pTime);
+							//System.out.println(pobs.getCode());
+						String code1 = ((CD)pobs.getValues().get(0)).getCode();
+						//System.out.println((CD)pobs.getProblemStatus().getCode());
+						//System.out.println(((CD)pobs.getProblemStatus().getValues().get(0)));
 						HashMap ts = CDAParserUtil.getTS(pTime);
-						cond.put("code", pobs.getCode().getCode());
+						cond.put("code1", pobs.getCode().getCode());
 						cond.put("name", problem_name);
 						cond.put("status", problem_status);
 						cond.put("ts", ts);
+						cond.put("code", code1);
 						condList.add(cond);
 					}
 					if(obs instanceof EpisodeObservation){
